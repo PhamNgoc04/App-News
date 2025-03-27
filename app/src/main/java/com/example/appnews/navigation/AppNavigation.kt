@@ -7,13 +7,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.appnews.data.model.NewsItem
+import com.example.appnews.ui.screens.FavoriteScreen
 import com.example.appnews.ui.screens.NewsDetailScreen
 import com.example.appnews.ui.screens.NewsScreen
+import com.example.appnews.viewmodel.NewsViewModel
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(
+    navController: NavHostController,
+    newsViewModel: NewsViewModel
+) {
     NavHost(
         navController = navController,
         startDestination = "news_list"
@@ -35,8 +40,13 @@ fun AppNavigation(navController: NavHostController) {
             val imageUrl = decodeArg(backStackEntry.arguments?.getString("imageUrl"))
 
             val newsItem = NewsItem(id = 0, title = title, description = description, imageUrl = imageUrl, publishedAt = "N/A")
-            NewsDetailScreen(navController, newsItem)
+            NewsDetailScreen(navController, newsItem, newsViewModel)
         }
+
+        composable("favorites") {
+            FavoriteScreen(navController, newsViewModel)
+        }
+
     }
 }
 

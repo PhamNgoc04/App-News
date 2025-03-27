@@ -9,6 +9,7 @@ class GetNewsUseCase @Inject constructor(
     private val repository: NewsRepository
 ) {
 
+    // Hàm này sẽ được gọi khi cần dữ liệu từ UseCase
     suspend operator fun invoke(): List<NewsItem> {
         val newsEntities = repository.getNewsFromDb()
         return newsEntities.map { it.toNewsItem() }
